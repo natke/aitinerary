@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Travel Assistant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        h2 {
+            color: #666;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        .activity-list {
+            list-style: none;
+            padding: 0;
+        }
+        .activity-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border-radius: 5px;
+        }
+        .activity-title {
+            font-weight: bold;
+            margin: 0;
+        }
+        .activity-description {
+            color: #888;
+            margin-top: 5px;
+        }
+        .checkbox {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Travel Assistant</h1>
+        
+        <form action="/itinerary" method="post">
+            <div class="form-group">
+                <label for="city">Enter a city:</label>
+                <input type="text" id="city" name="city" placeholder="City name" required>
+                <button type="submit">Get Itinerary</button>
+            </div>
+            
+            <input type="hidden" id="hidden_city" name="hidden_city">
+        </form>
+
+        {% if activities %}
+        <h2>One Day Itinerary</h2>
+        <ul class="activity-list">
+            {% for activity in activities %}
+            <li class="activity-item">
+                <input type="checkbox" class="checkbox" id="activity_{{ loop.index }}">
+                <span class="activity-title">{{ activity.title }}</span>
+                <span class="activity-description">{{ activity.description }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No activities found for the selected city.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
