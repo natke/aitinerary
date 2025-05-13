@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request
-from requests import get, post
+from requests import post
+import re
 
 app = Flask(__name__)
 
 # Load environment variables
-BASE_URL = "http://localhost:5272"
+BASE_API_URL = "http://localhost:5272"
 
 @app.route('/')
 def home():
@@ -20,38 +21,51 @@ def get_itinerary():
     }
 
     data = {
-        "model": "deepseek-r1-distill-llama-8b-generic-gpu",
-        "messages": [{
-            "role": "user",
-            "content": f"Create a one day travel itinerary for the city of {city}. Include popular attractions, good places to eat, and fun activities. Make it concise and easy to follow."
+        "model": "Phi-4-mini-instruct-generic-gpu",
+        "messages": [
+            {
+                "role": "system",
+                "content": "You are a travel assistant. You will help users create a one day travel itinerary for a city.\n"
+            },
+            {
+                "role": "user",
+                "content": f"Create a one day travel itinerary for the city of {city}. Include popular attractions, good places to eat, and fun activities. Make it concise and easy to follow. Output the itinerary in a list format with each item starting with a •\n"
         }],
         "temperature": 0.7,
+        "max_tokens": 2000,
         "metadata": {
             "ep": "webgpu"
         }
     }
     
-    response = post(f"{BASE_URL}/v1/chat/completions", headers=headers, json=data)
+    response = post(f"{BASE_API_URL}/v1/chat/completions", headers=headers, json=data)
 
-    print(response.json())
-
-    # Simulate a response for demonstration purposes
-    # response = {"choices": [{"message": {"content": "1. Visit the Eiffel Tower - A must-see landmark in Paris.\n2. Lunch at Café de Flore - Enjoy a classic French meal.\n3. Stroll through the Louvre - Explore world-famous art.\n4. Dinner at Le Meurice - Experience fine dining."}}]} 
+    #print(response.json())
     # Extract the itinerary
     itinerary = []
     if response.status_code == 200:
-        data = response.json()
-        for activity in data['choices'][0]['message']['content'].split('\n'):
+        data = response.json()['choices'][0]['message']['content']
+        #  Filter out the <think> tags for deepseek
+        # data = re.sub(r"< \| User \| >.*?< \| Assistant \| ><think>.*?<\/think>", "", full_data, flags=re.DOTALL)
+
+        print(data)
+
+        for activity in data.split('•'):
             if activity:
-                parts = activity.split('•')
-                if len(parts) >= 2:
-                    name = parts[0].strip()
-                    description = parts[1].strip()
-                    itinerary.append({
-                        'name': name,
-                        'description': description
-                    })
-    return render_template('itinerary.html', itinerary=itinerary)
+                description = activity.strip()
+                #parts = activity.split('•')
+                #if len(parts) >= 1:
+                    #name = parts[0].strip()
+                    #description = parts[0].strip()
+                    #print("********* description *********")
+                    #print(description)
+                itinerary.append({
+#                         'name': name,
+                    'description': description
+                })
+
+                
+    return render_template('itinerary.html', activities=itinerary)
 
 if __name__ == '__main__':
     app.run(debug=True)                    

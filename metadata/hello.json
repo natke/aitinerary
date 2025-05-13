@@ -1,0 +1,14 @@
+{
+    "model": "Phi-4-mini-instruct-generic-gpu",
+    "messages": [
+        {
+            "role": "user",
+            "content": "Hello"
+        }
+    ],
+    "temperature": 0.7,
+    "max_tokens": 2000,
+    "metadata": {
+        "ep": "webgpu"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "model": "deepseek-r1-distill-llama-8b-generic-gpu",
+    "messages": [
+        {
+            "role": "user",
+            "content": "Create a one day travel itinerary for the city of Sydney. Include popular attractions, good places to eat, and fun activities. Make it concise and easy to follow. Output the itinerary in a list format with each item starting with a bullet point. For example: \n• Visit the Eiffel Tower\n• Lunch at a local cafe\n• Explore the Louvre Museum\n• Dinner at a Michelin-star restaurant\n"
+        }
+    ],
+    "temperature": 0.7,
+    "max_tokens": 2000,
+    "metadata": {
+        "ep": "webgpu"
+    }
+}

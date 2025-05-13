@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Travel Itinerary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .activity-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .activity-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border-radius: 5px;
+        }
+        .activity-title {
+            font-weight: bold;
+            margin: 0;
+        }
+        .activity-description {
+            color: #888;
+            margin-top: 5px;
+        }
+        .checkbox {
+            margin-left: 10px;
+        }
+        .itinerary-block {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .itinerary-title {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .itinerary-content {
+            font-size: 1em;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Travel Itinerary</h1>
+        
+        <div class="itinerary-block">
+            <div class="itinerary-title">Your One Day Travel Itinerary</div>
+            <div class="itinerary-content">
+                {% for activity in activities %}
+                {{ activity.title }}<br>
+                {{ activity.description }}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
