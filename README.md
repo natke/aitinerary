@@ -16,7 +16,7 @@ To use this application:
    pip install flask requests
    ```
 
-2. Set up your OpenAI API key in the environment variables:
+2. Set up your environment variables:
    ```bash
    export FLASK_APP=your_app.py
    ```
@@ -27,3 +27,9 @@ To use this application:
    ```
 
 4. Visit http://localhost:5000 in your browser to use the travel assistant.
+
+## Help
+
+```
+curl -H "Content-Type: application/json" --data @metadata/hello.json http://localhost:5123/v1/chat/completions
+```

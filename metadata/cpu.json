@@ -1,5 +1,5 @@
 {
-    "model": "qwen2.5-coder-7b-instruct-generic-gpu",
+    "model": "qwen2.5-coder-0.5b-instruct-generic-cpu",
     "messages": [
         {
             "role": "user",

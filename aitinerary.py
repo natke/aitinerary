@@ -21,7 +21,7 @@ def get_itinerary():
     }
 
     data = {
-        "model": "Phi-4-mini-instruct-generic-gpu",
+        "model": "qwen2.5-coder-14b-instruct-generic-cpu",
         "messages": [
             {
                 "role": "system",
@@ -32,40 +32,29 @@ def get_itinerary():
                 "content": f"Create a one day travel itinerary for the city of {city}. Include popular attractions, good places to eat, and fun activities. Make it concise and easy to follow. Output the itinerary in a list format with each item starting with a •\n"
         }],
         "temperature": 0.7,
-        "max_tokens": 2000,
-        "metadata": {
-            "ep": "webgpu"
-        }
+        "max_tokens": 2000
     }
     
     response = post(f"{BASE_API_URL}/v1/chat/completions", headers=headers, json=data)
 
-    #print(response.json())
     # Extract the itinerary
     itinerary = []
     if response.status_code == 200:
         data = response.json()['choices'][0]['message']['content']
-        #  Filter out the <think> tags for deepseek
-        # data = re.sub(r"< \| User \| >.*?< \| Assistant \| ><think>.*?<\/think>", "", full_data, flags=re.DOTALL)
-
-        print(data)
 
         for activity in data.split('•'):
             if activity:
                 description = activity.strip()
-                #parts = activity.split('•')
-                #if len(parts) >= 1:
-                    #name = parts[0].strip()
-                    #description = parts[0].strip()
-                    #print("********* description *********")
-                    #print(description)
                 itinerary.append({
-#                         'name': name,
                     'description': description
                 })
+    else:
+        itinerary.append({
+            'description': "Error: Unable to fetch itinerary. Please try again."
+        })
 
                 
-    return render_template('itinerary.html', activities=itinerary)
+    return render_template('itinerary.html', city=city, activities=itinerary)
 
 if __name__ == '__main__':
     app.run(debug=True)                    
