@@ -21,7 +21,7 @@ def get_itinerary():
     }
 
     data = {
-        "model": "qwen2.5-1.5b-instruct-generic-cpu",
+        "model": "qwen2.5-0.5b-instruct-generic-gpu",
         "messages": [
             {
                 "role": "system",

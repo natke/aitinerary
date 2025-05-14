@@ -31,5 +31,5 @@ To use this application:
 ## Help
 
 ```
-curl -H "Content-Type: application/json" --data @metadata/hello.json http://localhost:5123/v1/chat/completions
+curl -H "Content-Type: application/json" --data @metadata/hello.json http://localhost:5272/v1/chat/completions
 ```
