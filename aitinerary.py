@@ -21,7 +21,7 @@ def get_itinerary():
     }
 
     data = {
-        "model": "qwen2.5-coder-14b-instruct-generic-cpu",
+        "model": "qwen2.5-1.5b-instruct-generic-cpu",
         "messages": [
             {
                 "role": "system",
@@ -45,9 +45,10 @@ def get_itinerary():
         for activity in data.split('•'):
             if activity:
                 description = activity.strip()
-                itinerary.append({
-                    'description': description
-                })
+                if (len(description)):
+                    itinerary.append({
+                        'description': description
+                    })
     else:
         itinerary.append({
             'description': "Error: Unable to fetch itinerary. Please try again."
