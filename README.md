@@ -28,6 +28,10 @@ To use this application:
 
 4. Visit http://localhost:5000 in your browser to use the travel assistant.
 
+5. Install the Foundry Local SDK
+   
+6. Add calls to Foundry Manager to download and cache models
+
 ## Help
 
 ```
