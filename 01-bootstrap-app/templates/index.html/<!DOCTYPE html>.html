@@ -1,0 +1,90 @@
+<html>
+<head>
+    <title>Travel Assistant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .itinerary-list {
+            margin-top: 20px;
+        }
+        .activity-item {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border-radius: 5px;
+        }
+        .activity-item:hover {
+            background-color: #f0f0f0;
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Travel Assistant</h1>
+        <div id="city-selection">
+            <label for="city">Select a city:</label>
+            <select id="city">
+                {% for city in cities %}
+                <option value="{{ city }}">{{ city }}</option>
+                {% endfor %}
+            </select>
+            <button onclick="generateItinerary()">Generate Itinerary</button>
+        </div>
+        <div id="itinerary" class="itinerary-list"></div>
+    </div>
+
+    <script>
+        function generateItinerary() {
+            const city = document.getElementById('city').value;
+            const itineraryDiv = document.getElementById('itinerary');
+            
+            fetch('/get-itinerary', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ city: city })
+            })
+            .then(response => response.json())
+            .then(data => {
+                itineraryDiv.innerHTML = '';
+                const activities = JSON.parse(data.itinerary).day_itinerary;
+                
+                activities.forEach(activity => {
+                    const div = document.createElement('div');
+                    div.className = 'activity-item';
+                    div.innerHTML = `
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="${activity.replace(/\s+/g, '')}" style="margin-right: 10px;">
+                            <label for="${activity.replace(/\s+/g, '')}">${activity}</label>
+                        </div>
+                    `;
+                    itineraryDiv.appendChild(div);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
