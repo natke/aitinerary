@@ -5,7 +5,9 @@ import os
 app = Flask(__name__)
 
 # Replace with your OpenAI API key
-API_KEY = os.getenv('OPENAI_API_KEY')
+#API_KEY = os.getenv('OPENAI_API_KEY')
+SERVICE_URI = os.getenv('SERVICE_URI')
+
 
 CITIES = [
     'Paris', 'Rome', 'London', 'New York', 'Tokyo', 'Sydney', 'Dubai',
@@ -22,17 +24,18 @@ def get_itinerary():
     prompt = f"Create a one-day travel itinerary for {city}. Include 8-10 activities with times. Return only the itinerary in JSON format."
     
     response = requests.post(
-        'https://api.openai.com/v1/chat/completions',
+        f"{SERVICE_URI}/v1/chat/completions",
         headers={
-            'Authorization': f'Bearer {API_KEY}',
             'Content-Type': 'application/json'
         },
         json={
-            'model': 'gpt-3.5-turbo',
+            'model': 'phi-3.5-mini',
             'messages': [{'role': 'user', 'content': prompt}]
         }
     )
-    
+
+    print(f"Response: {response}")
+
     if response.status_code == 200:
         data = response.json()
         itinerary = data.get('choices', [{}])[0].get('message', {}).get('content', '')
