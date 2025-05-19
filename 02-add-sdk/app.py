@@ -18,6 +18,7 @@ def index():
 
 @app.route('/get-itinerary', methods=['POST'])
 def get_itinerary():
+    
     city = request.json['city']
     prompt = f"Create a one-day travel itinerary for {city}. Include 8-10 activities with times. Output a JSON list of activities, each with a name and a description"
     
