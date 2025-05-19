@@ -32,8 +32,3 @@ To use this application:
    
 6. Add calls to Foundry Manager to download and cache models
 
-## Help
-
-```
-curl -H "Content-Type: application/json" --data @metadata/hello.json http://localhost:5272/v1/chat/completions
-```
