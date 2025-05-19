@@ -5,9 +5,5 @@ Output a single page application that can be served by the Python Flask tool. Th
 ```
 
 ```
-Create a one-day travel itinerary for Sydney. Include 8-10 activities with times. Return only the itinerary in JSON format.
-```
-
-```
-Create a one-day travel itinerary for Hobart. Include 8-10 activities with times. Output a JSON list of activities, each with a name and a description
+Create a one-day travel itinerary for Redmond. Include 8-10 activities with times. Output a JSON list of activities, each with a name and a description
 ```

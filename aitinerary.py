@@ -13,15 +13,15 @@ BASE_API_URL = manager.service_uri
 
 print(f"Service URI: {BASE_API_URL}")
 
-@app.route('/')
-def home():
-    return render_template('index.html')
+#@app.route('/')
+#def home():
+#    return render_template('index.html')
 
 @app.route('/models')
 def models():
     return render_template('models.html', models=cache)
 
-@app.route('/itinerary', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def get_itinerary():
     
     if request.method == 'GET':
